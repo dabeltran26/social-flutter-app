@@ -29,7 +29,8 @@ class _HomePageState extends State<HomePage> {
     userName: "david",
     userPhoto: "https://s3.amazonaws.com/uifaces/faces/twitter/rpatey/128.jpg",
     caption: "Hoal mundo",
-    postPhoto: "https://static.vix.com/es/sites/default/files/styles/1x1/public/imj/p/paisajes-espectaculares-del-mundo-1.jpg",
+    postPhoto:
+        "https://static.vix.com/es/sites/default/files/styles/1x1/public/imj/p/paisajes-espectaculares-del-mundo-1.jpg",
     date: "lunes 16",
   );
 
@@ -147,18 +148,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _createButton() {
-    return RaisedButton.icon(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      color: GeneralColors.blue,
-      textColor: GeneralColors.white,
-      label: Text('Guardar'),
-      icon: Icon(Icons.save),
-      onPressed: _submit,
+    return GestureDetector(
+      child: Text('Guardar'),
+      onTap: _submit,
     );
   }
 
   void _submit() async {
-     _bloc.add(CreatePost(post: post));
+    _bloc.add(CreatePost(post: post));
   }
 
   Widget _mostrarFoto() {
@@ -187,13 +184,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   _buildImage(ImageSource origen) async {
-    photo = await ImagePicker.pickImage(source: origen);
+    /*photo = (await ImagePicker.pickImage(source: origen)) as File;
 
     if (photo != null) {
       post.postPhoto = null;
     }
 
-    setState(() {});
+    setState(() {});*/
   }
 
   Widget _appBar() {
@@ -212,13 +209,13 @@ class _HomePageState extends State<HomePage> {
       ),
       actions: <Widget>[
         IconButton(
-          icon: Icon( Icons.photo_size_select_actual ),
+          icon: Icon(Icons.photo_size_select_actual),
           onPressed: _selectPhoto,
           color: GeneralColors.black,
           iconSize: 35,
         ),
         IconButton(
-          icon: Icon( Icons.camera_alt ),
+          icon: Icon(Icons.camera_alt),
           onPressed: _getPhoto,
           color: GeneralColors.black,
           iconSize: 35,
@@ -249,15 +246,10 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 Container(
                   child: Container(
-                    padding: EdgeInsets.only(
-                        top: 12, left: 18, bottom: 12, right: 2),
+                    padding: EdgeInsets.only(top: 12, left: 18, bottom: 12, right: 2),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
-                      child: Image(
-                          image: NetworkImage(post.userPhoto),
-                          height: 45,
-                          width: 45,
-                          fit: BoxFit.cover),
+                      child: Image(image: NetworkImage(post.userPhoto), height: 45, width: 45, fit: BoxFit.cover),
                     ),
                   ),
                 ),
@@ -274,9 +266,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          FadeInImage(
-              placeholder: AssetImage('assets/img/loading.gif'),
-              image: NetworkImage(post.postPhoto)),
+          FadeInImage(placeholder: AssetImage('assets/img/loading.gif'), image: NetworkImage(post.postPhoto)),
           Container(
             padding: EdgeInsets.only(
               top: 5,
@@ -336,10 +326,7 @@ class _HomePageState extends State<HomePage> {
                   text: TextSpan(children: [
                     TextSpan(
                         text: "${post.userName} ",
-                        style: TextStyle(
-                            color: GeneralColors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15)),
+                        style: TextStyle(color: GeneralColors.black, fontWeight: FontWeight.bold, fontSize: 15)),
                     TextSpan(
                       text: "${post.caption} ",
                       style: TextStyle(
@@ -364,9 +351,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _tabBar() {
     return Container(
-      decoration: BoxDecoration(
-          border:
-              Border(top: BorderSide(color: GeneralColors.black, width: 0.75))),
+      decoration: BoxDecoration(border: Border(top: BorderSide(color: GeneralColors.black, width: 0.75))),
       child: BottomNavigationBar(
         showUnselectedLabels: false,
         showSelectedLabels: false,
@@ -383,23 +368,23 @@ class _HomePageState extends State<HomePage> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(AntDesign.home),
-            title: Text("Home"),
+            label: "Home",
           ),
           BottomNavigationBarItem(
             icon: Icon(Feather.search),
-            title: Text("Buscar"),
+            label: "Buscar",
           ),
           BottomNavigationBarItem(
             icon: Icon(Feather.plus_square),
-            title: Text("Cargar"),
+            label: "Cargar",
           ),
           BottomNavigationBarItem(
             icon: Icon(Feather.heart),
-            title: Text("Likes"),
+            label: "Likes",
           ),
           BottomNavigationBarItem(
             icon: Icon(Feather.user),
-            title: Text("Cuenta"),
+            label: "Cuenta",
           ),
         ],
       ),

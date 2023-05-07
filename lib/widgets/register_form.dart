@@ -41,35 +41,14 @@ class _RegisterFormState extends State<RegisterForm> {
       child: BlocListener<RegisterBloc, RegisterState>(
           listener: (context, state) {
         if (state.isSubmitting) {
-          Scaffold.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(
-              content: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('Registering'),
-                  CircularProgressIndicator()
-                ],
-              ),
-            ));
+          print('Cargando');
         }
         if (state.isSuccess) {
           BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
           Navigator.of(context).pop();
         }
         if (state.isFailure) {
-          Scaffold.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(
-              content: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('Registration Failure'),
-                  Icon(Icons.error)
-                ],
-              ),
-              backgroundColor: Colors.red,
-            ));
+          print('Error');
         }
       }, child: BlocBuilder<RegisterBloc, RegisterState>(
         builder: (context, state) {
@@ -94,7 +73,6 @@ class _RegisterFormState extends State<RegisterForm> {
                     ),
                     keyboardType: TextInputType.emailAddress,
                     autocorrect: false,
-                    autovalidate: true,
                     validator: (_) {
                       return !state.isEmailValid ? 'Invalid Email' : null;
                     },
@@ -105,21 +83,17 @@ class _RegisterFormState extends State<RegisterForm> {
                         icon: Icon(Icons.lock), labelText: 'Password'),
                     obscureText: true,
                     autocorrect: false,
-                    autovalidate: true,
                     validator: (_) {
                       return !state.isPasswordValid ? 'Invalid Password' : null;
                     },
                   ),
                   SizedBox(height: 20,),
-                  RaisedButton(
+                  GestureDetector(
                     child: Container(
                         width: padding.width * 0.5,
                         height: padding.height * 0.06,
                         child: Center(child: Text('Registrarme'))),
-                    color: GeneralColors.blue,
-                    textColor: GeneralColors.white,
-                    shape: StadiumBorder(),
-                    onPressed: _onFormSubmitted,
+                    onTap: _onFormSubmitted,
                   ),
                 ],
               ),

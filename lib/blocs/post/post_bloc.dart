@@ -11,7 +11,7 @@ class PostBloc extends Bloc<PostEvent,PostState> {
 
   PostBloc({@required PostRepository postRepository})
       :assert (postRepository != null),
-        _postRepository = postRepository;
+        _postRepository = postRepository, super(null);
 
   @override
   PostState get initialState => InitState();

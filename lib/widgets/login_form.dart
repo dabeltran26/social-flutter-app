@@ -32,30 +32,10 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(listener: (context, state) {
       if (state.isFailure) {
-        Scaffold.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(
-            SnackBar(
-              content: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text('Error'), Icon(Icons.error)],
-              ),
-              backgroundColor: Colors.red,
-            ),
-          );
+        print('Error');
       }
       if (state.isSubmitting) {
-        Scaffold.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(SnackBar(
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text('Ingresando'),
-                CircularProgressIndicator(),
-              ],
-            ),
-          ));
+        print('Cargando');
       }
       if (state.isSuccess) {
         BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
@@ -81,7 +61,6 @@ class _LoginFormState extends State<LoginForm> {
                   decoration: InputDecoration(
                       icon: Icon(Icons.email), labelText: 'Email'),
                   keyboardType: TextInputType.emailAddress,
-                  autovalidate: true,
                   autocorrect: false,
                   validator: (_) {
                     return !state.isEmailValid ? 'Invalid Email' : null;
@@ -92,7 +71,6 @@ class _LoginFormState extends State<LoginForm> {
                   decoration: InputDecoration(
                       icon: Icon(Icons.lock), labelText: 'Password'),
                   obscureText: true,
-                  autovalidate: true,
                   autocorrect: false,
                   validator: (_) {
                     return !state.isPasswordValid ? 'Invalid Password' : null;
@@ -103,18 +81,15 @@ class _LoginFormState extends State<LoginForm> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      RaisedButton(
+                      GestureDetector(
                           child: Container(
                               width: padding.width * 0.5,
                               height: padding.height * 0.06,
                               child: Center(child: Text('Iniciar sesion'))),
-                          color: GeneralColors.blue,
-                          textColor: GeneralColors.white,
-                          shape: StadiumBorder(),
-                          onPressed: _onFormSubmitted),
-                      FlatButton(
+                          onTap: _onFormSubmitted),
+                      GestureDetector(
                         child: Text('regitrate'),
-                        onPressed: () {
+                        onTap: () {
                           Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) {
                             return RegisterPage();

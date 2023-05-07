@@ -7,7 +7,7 @@ class PostRepository{
   final String _url = 'https://social-app-23978.firebaseio.com';
 
   Future<bool> createPost( PostModel post ) async {
-    final url = '$_url/post.json';
+    final url = Uri(path: '$_url/post.json');
     final resp = await http.post( url, body: postModelToJson(post) );
     final decodedData = json.decode(resp.body);
     print( decodedData );
@@ -16,7 +16,7 @@ class PostRepository{
 
   Future<List<PostModel>> getPost() async {
 
-    final url  = '$_url/post.json';
+    final url = Uri(path: '$_url/post.json');
     final resp = await http.get(url);
 
     final Map<String, dynamic> decodedData = json.decode(resp.body);

@@ -10,7 +10,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   RegisterBloc({@required UserRepository userRepository})
       : assert(userRepository != null),
-        _userRepository = userRepository;
+        _userRepository = userRepository, super(null);
 
   @override
   RegisterState get initialState => RegisterState.empty();
